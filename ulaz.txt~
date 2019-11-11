@@ -1,0 +1,5 @@
+(ukus:10,miris: 8) -> vino
+(ukus:10,providnost:2) -> med
+.
+vino: * ukus, + miris = ;
+

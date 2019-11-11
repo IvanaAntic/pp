@@ -1,0 +1,7 @@
+(ukus:10,miris: 8) -> vino
+(ukus:10,providnost:2) -> med
+.
+vino: * ukus, + miris = barberaDOC;
+vino: * ukus, * miris = barolodianata;
+vino: - ukus, / miris = astinckywine;
+med: *ukus, *providnost =accaciahoney;

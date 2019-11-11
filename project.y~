@@ -1,0 +1,70 @@
+%{
+  #include <stdio.h>
+
+  int yyparse(void);
+  int yylex(void);
+  int yyerror(char *s);
+  extern int yylineno;
+ 
+%}
+
+%token _PROPERTY
+%token _ID
+%token _NUMBER
+%token _LPAREN
+%token _RPAREN
+%token _COLON
+%token _DOT
+%token _ASSIGN
+%token _SEMICOLON
+%token _AROP
+%token _RELOP
+%token _COMMA
+
+
+%nonassoc ONLY_IF
+%nonassoc _ELSE
+
+%%
+
+program
+  : 
+	| variable_list _DOT
+	| variable_list _DOT statement_list
+  ;
+
+
+variable_list
+  : variable
+  | variable_list variable
+  ;
+
+variable
+	:  value _RELOP _ID
+	;
+
+value
+	: _LPAREN _PROPERTY _COLON _NUMBER _COMMA _PROPERTY _COLON _NUMBER _RPAREN
+	;
+
+statement_list
+  : statement
+	| statement_list statement
+	;
+
+statement
+	: _ID _COLON _AROP _PROPERTY _COMMA _AROP _PROPERTY _ASSIGN _SEMICOLON
+	;
+
+
+%%
+
+int yyerror(char *s) {
+  fprintf(stderr, "\nline %d: ERROR: %s\n", yylineno, s);
+  return 0;
+}
+
+int main() {
+	
+  	return yyparse();
+}
